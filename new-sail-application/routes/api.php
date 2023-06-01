@@ -17,10 +17,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [UserController::class, 'login']);
+
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::resource('users', UserController::class);
+    Route::resource('meetings', MeetingController::class);
+    Route::resource('organizations', OrganizationController::class);
 });
 
-Route::resource('users', UserController::class);
-Route::resource('meetings', MeetingController::class);
-Route::resource('organizations', OrganizationController::class);

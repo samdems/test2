@@ -5,6 +5,8 @@ import {createApp} from 'vue/dist/vue.esm-bundler.js';
 import {createPinia} from 'pinia'
 import { createRouter,createWebHistory } from 'vue-router';
 
+import { useUserStore } from "./stores/users";
+
 import error from './components/error.vue'
 import appNav from './components/appNav.vue'
 
@@ -15,6 +17,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const users = useUserStore()
+  if (to.name == 'login' || users.authenticated ) {
+    next(); 
+  } else {
+    next('/login'); 
+  }
+})
+
 
 const app = createApp({});
 app.component('error',error)

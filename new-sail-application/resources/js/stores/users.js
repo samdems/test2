@@ -6,6 +6,24 @@ import { useErrorStore } from './errors.js';
 export const useUserStore = defineStore('Users', () => {
   const errors = useErrorStore()
   const Users = ref([]);
+  const authenticated = ref(false);
+  const ActiveUser = ref();
+  async function login(email, password) {
+    try {
+      const response = await axios.post('/api/login', { email, password });
+      const token = response.data.token;
+
+      // Set the token in Axios headers
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      authenticated.value = true
+      ActiveUser.value = response.data.user
+      // ... Continue with your logic or redirect to authenticated routes
+    } catch (error) {
+      handleError('Username or password is invalid');
+      authenticated.value = false
+      ActiveUser.value = null;
+    }
+  }
   async function fetchUsers() {
     try {
       const response = await axios.get('/api/users');
@@ -73,6 +91,9 @@ export const useUserStore = defineStore('Users', () => {
 
   return {
     Users,
+    authenticated,
+    ActiveUser,
+    login,
     fetchUsers,
     fetchUser,
     createUser,

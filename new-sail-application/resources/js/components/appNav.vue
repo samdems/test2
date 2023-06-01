@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="#">Logo</a>
+      <a class="navbar-brand" href="#">meetings</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -24,6 +24,9 @@
           </span>
         </ul>
       </div>
+      <div class="ml-auto">
+        {{ users.ActiveUser?.name }} - {{ users.ActiveUser?.organization?.name }}
+      </div>
     </div>
   </nav>
 </template>
@@ -32,6 +35,8 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import routes from "../routes.js";
+import {useUserStore} from "../stores/users"
+const users = useUserStore()
 const route = useRoute();
 
 const isActiveRoute = (path) => route.path === path;

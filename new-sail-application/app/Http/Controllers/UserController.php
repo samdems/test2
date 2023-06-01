@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -81,5 +82,17 @@ class UserController extends Controller
         $user->delete();
 
         return response()->noContent();
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        if (!$token = Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        $user = User::where('email',$credentials['email'])->first();
+        $user->load(['meetings','organization']);
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 }
