@@ -10,18 +10,6 @@
 </template>
 
 <script setup>
-    import { onMounted } from 'vue'
-import {useErrorStore} from '../stores/errors.js'
+    import {useErrorStore} from '../stores/errors.js'
     const errors = useErrorStore()
-
-    onMounted(()=>{
-        errors.add({
-            text:'this is an error'
-        })
-        errors.add({
-            text:'this is an error2'
-        })
-    })
-    
-
 </script>
