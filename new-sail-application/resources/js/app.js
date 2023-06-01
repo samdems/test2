@@ -3,6 +3,7 @@ import '../css/app.sass'
 import {createApp} from 'vue/dist/vue.esm-bundler.js';
 import {createPinia} from 'pinia'
 import { createRouter,createWebHistory } from 'vue-router';
+import '@vueform/multiselect/themes/default.css';
 import Home from './components/Home.vue';
 import ListUsers from './components/users/ListUsers.vue';
 import ListMeetings from './components/meetings/ListMeetings.vue'

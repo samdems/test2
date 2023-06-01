@@ -33,6 +33,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'organization_id' => $request->organization
         ]);
 
         return response()->json($user, 201);
@@ -63,6 +64,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
+            'organization_id' => $request->organization
         ]);
 
         return response()->json($user);

@@ -16,7 +16,7 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        $meetings = Meeting::all();
+        $meetings = Meeting::with('attendees')->get();
 
         return response()->json($meetings);
     }

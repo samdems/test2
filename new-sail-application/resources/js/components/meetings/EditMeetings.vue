@@ -46,15 +46,14 @@
         />
       </div>
       <div class="input-group mb-3">
-        <input
-          v-model="meeting.attendees"
-          type="number"
-          class="form-control"
-          placeholder="attendees"
-          aria-label="attendees"
-        />
-      </div>
-      {{ users }}
+           <Multiselect
+                v-model="meeting.attendees"
+                mode="multiple"
+                :options="users.Users"
+                label="name"
+                valueProp="id"
+            />
+    </div>
       <button type="submit" class="btn btn-primary" @click.prevent="save()">
         {{ id ? "Update" : "Create" }}
       </button>
@@ -66,7 +65,9 @@
   import { useMeetingStore } from "../../stores/meetings";
   import { ref } from 'vue';
   import { useUserStore } from "../../stores/users";
-  
+  import Multiselect from '@vueform/multiselect'
+
+
   const route = useRoute();
   const router = useRouter();
   const meetings = useMeetingStore();
@@ -79,7 +80,7 @@
     start_time: '',
     end_time: '',
     agenda: '',
-    attendees: 0
+    attendees: []
   });
   
   async function fetchData() {
