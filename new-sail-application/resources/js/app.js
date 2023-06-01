@@ -5,15 +5,20 @@ import {createPinia} from 'pinia'
 import { createRouter,createWebHistory } from 'vue-router';
 import Home from './components/Home.vue';
 import ListUsers from './components/users/ListUsers.vue';
+import ListMeetings from './components/meetings/ListMeetings.vue'
 import PageNotFound from './components/PageNotFound.vue';
-import editUser from './components/users/editUser.vue';
+import EditMeetings from './components/meetings/EditMeetings.vue'
+import EditUser from './components/users/EditUser.vue';
 import error from './components/error.vue'
 
 const routes = [
   { path: '/', component: Home },
   { path: '/users',component: ListUsers},
-  { path: '/users/new',component: editUser},
-  { path: '/users/:id',component: editUser},
+  { path: '/users/new',component: EditUser},
+  { path: '/users/:id',component: EditUser},
+  { path: '/meetings',component: ListMeetings},
+  { path: '/meetings/new',component: EditMeetings},
+  { path: '/meetings/:id',component: EditMeetings},
   { path: "/:pathMatch(.*)*", component: PageNotFound }
 ]
 

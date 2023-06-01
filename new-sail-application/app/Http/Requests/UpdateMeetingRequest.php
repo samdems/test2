@@ -25,8 +25,8 @@ class UpdateMeetingRequest extends FormRequest
     {
         return [
             'date' => 'sometimes|date',
-            'start_time' => 'sometimes|date_format:H:i:s',
-            'end_time' => 'sometimes|date_format:H:i:s|after:start_time',
+            'start_time' => 'sometimes|date_format:H:i',
+            'end_time' => 'sometimes|date_format:H:i|after:start_time',
             'title' => 'sometimes|string',
             'agenda' => 'sometimes|string',
             'attendees' => 'sometimes|array',
