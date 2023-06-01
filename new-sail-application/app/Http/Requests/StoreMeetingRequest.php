@@ -31,6 +31,7 @@ class StoreMeetingRequest extends FormRequest
             'agenda' => 'required|string',
             'attendees' => 'required|array',
             'attendees.*' => 'exists:users,id',
+            'organization' => 'required',
         ];
     }
 }

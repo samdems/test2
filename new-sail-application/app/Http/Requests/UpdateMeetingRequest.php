@@ -31,6 +31,7 @@ class UpdateMeetingRequest extends FormRequest
             'agenda' => 'sometimes|string',
             'attendees' => 'sometimes|array',
             'attendees.*' => 'exists:users,id',
+            'organization' => 'required',
         ];
     }
 }

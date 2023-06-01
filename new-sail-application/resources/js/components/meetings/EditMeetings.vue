@@ -53,7 +53,15 @@
                 label="name"
                 valueProp="id"
             />
-    </div>
+      </div>
+      <div class="input-group mb-3">
+           <Multiselect
+                v-model="meeting.organization"
+                :options="organizations.Organizations"
+                label="name"
+                valueProp="id"
+            />
+      </div>
       <button type="submit" class="btn btn-primary" @click.prevent="save()">
         {{ id ? "Update" : "Create" }}
       </button>
@@ -66,6 +74,9 @@
   import { ref } from 'vue';
   import { useUserStore } from "../../stores/users";
   import Multiselect from '@vueform/multiselect'
+  import { useOrganizationStore } from '../../stores/organizations.js';
+
+  const organizations = useOrganizationStore();
 
 
   const route = useRoute();
@@ -80,10 +91,12 @@
     start_time: '',
     end_time: '',
     agenda: '',
-    attendees: []
+    attendees: [],
+    organization:null
   });
   
   async function fetchData() {
+    organizations.fetchOrganizations()
     users.fetchUsers();
     if (!id.value) return;
     meeting.value = await meetings.fetchMeeting(id.value);

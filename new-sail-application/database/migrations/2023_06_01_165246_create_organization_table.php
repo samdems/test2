@@ -17,8 +17,12 @@ return new class extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('organizations_id')->nullable();
-            $table->foreign('organizations_id')->references('id')->on('organizations')->onDelete('cascade');
+            $table->unsignedBigInteger('organization_id')->nullable();
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
+        });
+        Schema::table('meetings', function (Blueprint $table) {
+            $table->unsignedBigInteger('organization_id')->nullable();
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['organization_id']);
+        });
+        Schema::table('meetings', function (Blueprint $table) {
             $table->dropForeign(['organization_id']);
         });
 

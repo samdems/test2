@@ -34,7 +34,8 @@ class MeetingController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'title' => $request->title,
-            'agenda' => $request->agenda,
+            'agenda' => $request->agenda, 
+            'organization_id' => $request->organization
         ]);
 
         $meeting->attendees()->sync($request->attendees);
@@ -50,7 +51,7 @@ class MeetingController extends Controller
      */
     public function show(Meeting $meeting)
     {
-        $meeting->load('attendees');
+        $meeting->load(['attendees','organization']);
 
         return response()->json($meeting);
     }
@@ -70,6 +71,7 @@ class MeetingController extends Controller
             'end_time' => $request->end_time,
             'title' => $request->title,
             'agenda' => $request->agenda,
+            'organization_id' => $request->organization
         ]);
 
         $meeting->attendees()->sync($request->attendees);

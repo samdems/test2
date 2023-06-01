@@ -36,6 +36,14 @@
         aria-label="password confirm"
       />
     </div>
+    <div class="input-group mb-3">
+           <Multiselect
+                v-model="user.organization"
+                :options="organizations.Organizations"
+                label="name"
+                valueProp="id"
+            />
+    </div>
     <button type="submit" class="btn btn-primary" @click.prevent="save()">
       {{ id ? "update" : "make" }}
     </button>
@@ -43,21 +51,26 @@
 </template>
 
 <script setup>
+import Multiselect from '@vueform/multiselect'
+
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "../../stores/users";
+import { useOrganizationStore } from '../../stores/organizations.js';
 import {ref} from 'vue';
 const route = useRoute();
 const router = useRouter()
 const users = useUserStore();
-
+const organizations = useOrganizationStore();
 const id = ref(route.params?.id);
 const user = ref({
     name:'',
     email:'',
     password:'',
-    passwordConfirm:''
+    passwordConfirm:'',
+    organization:null
 })
 async function fetchData() {
+    organizations.fetchOrganizations()
     if(!id.value) return 
     user.value = await users.fetchUser(id.value);
 }

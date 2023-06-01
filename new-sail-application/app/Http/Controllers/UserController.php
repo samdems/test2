@@ -47,8 +47,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $userWithMeetings = User::with('meetings')->find($user->id);
-        return response()->json($userWithMeetings); 
+        $user->load(['meetings','organization']);
+        return response()->json($user); 
     }
 
     /**

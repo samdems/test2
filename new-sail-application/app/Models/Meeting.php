@@ -13,10 +13,15 @@ class Meeting extends Model
         'title',
         'agenda',
         'attendees',
+        'organization_id',
     ];
 
     public function attendees()
     {
         return $this->belongsToMany(User::class, 'attendees', 'meeting_id', 'user_id');
+    }
+     public function organization()
+    {
+         return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

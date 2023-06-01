@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'organization_id'
     ];
 
     /**
@@ -46,5 +47,9 @@ class User extends Authenticatable
     public function meetings()
     {
         return $this->belongsToMany(Meeting::class, 'attendees', 'user_id', 'meeting_id');
+    }
+    public function organization()
+    {
+         return $this->belongsTo(Organization::class, 'organization_id');
     }
 }
