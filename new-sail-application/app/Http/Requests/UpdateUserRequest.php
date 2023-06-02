@@ -14,6 +14,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'password' => 'nullable|min:8',
             'organization' => 'required',
+            'admin'=>'required|boolean'
         ];
     }
 }

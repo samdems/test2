@@ -12,7 +12,7 @@ export const useOrganizationStore = defineStore('Organizations', () => {
       const response = await axios.get('/api/organizations');
       Organizations.value = response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -21,7 +21,7 @@ export const useOrganizationStore = defineStore('Organizations', () => {
       const response = await axios.get(`/api/organizations/${organizationId}`);
       return response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
       return null;
     }
   }
@@ -32,7 +32,7 @@ export const useOrganizationStore = defineStore('Organizations', () => {
       Organizations.value.push(response.data);
       return newOrganization;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -43,7 +43,7 @@ export const useOrganizationStore = defineStore('Organizations', () => {
         org => org.id !== organization.id
       );
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -59,16 +59,10 @@ export const useOrganizationStore = defineStore('Organizations', () => {
         return org;
       });
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
-  function handleError(error) {
-    console.error('Request failed:', error);
-    errors.add({
-      text: error?.response?.data?.message || error?.message || error,
-    });
-  }
 
   return {
     Organizations,

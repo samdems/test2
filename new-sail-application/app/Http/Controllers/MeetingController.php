@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMeetingRequest;
 use App\Http\Requests\UpdateMeetingRequest;
 use App\Models\Meeting;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MeetingController extends Controller
 {
@@ -14,11 +15,15 @@ class MeetingController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request  $request)
     {
-        $meetings = Meeting::with('attendees')->get();
-
-        return response()->json($meetings);
+        $jwt= JWTAuth::parseToken()->authenticate();
+        $meetings = Meeting::with('attendees');
+        
+        if(!$request->has('all') && $jwt->admin === 1){
+            $meetings->where('organization_id',$jwt->organization_id);
+        }
+        return response()->json($meetings->get());
     }
 
     /**

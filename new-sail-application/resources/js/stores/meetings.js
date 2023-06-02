@@ -12,7 +12,7 @@ export const useMeetingStore = defineStore('Meetings', () => {
       const response = await axios.get('/api/meetings');
       meetings.value = response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -21,7 +21,7 @@ export const useMeetingStore = defineStore('Meetings', () => {
       const response = await axios.get(`/api/meetings/${meetingId}`);
       return response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
       return null;
     }
   }
@@ -32,7 +32,7 @@ export const useMeetingStore = defineStore('Meetings', () => {
       meetings.value.push(response.data);
       return newMeeting;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -41,7 +41,7 @@ export const useMeetingStore = defineStore('Meetings', () => {
       await axios.delete(`/api/meetings/${meeting.id}`);
       meetings.value = meetings.value.filter(m => m.id !== meeting.id);
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -54,16 +54,10 @@ export const useMeetingStore = defineStore('Meetings', () => {
         return m;
       });
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
-  function handleError(error) {
-    console.error('Request failed:', error);
-    errors.add({
-      text: error?.response?.data?.message || error?.message || error,
-    });
-  }
 
   return {
     meetings,

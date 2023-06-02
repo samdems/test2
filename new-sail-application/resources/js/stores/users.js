@@ -13,13 +13,12 @@ export const useUserStore = defineStore('Users', () => {
       const response = await axios.post('/api/login', { email, password });
       const token = response.data.token;
 
-      // Set the token in Axios headers
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       authenticated.value = true
       ActiveUser.value = response.data.user
-      // ... Continue with your logic or redirect to authenticated routes
+      
     } catch (error) {
-      handleError('Username or password is invalid');
+      errors.handleError('Username or password is invalid');
       authenticated.value = false
       ActiveUser.value = null;
     }
@@ -29,7 +28,7 @@ export const useUserStore = defineStore('Users', () => {
       const response = await axios.get('/api/users');
       Users.value = response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -38,7 +37,7 @@ export const useUserStore = defineStore('Users', () => {
       const response = await axios.get(`/api/users/${userId}`);
       return response.data;
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
       return null;
     }
   }
@@ -46,14 +45,14 @@ export const useUserStore = defineStore('Users', () => {
   async function createUser(newUser) {
     try {
       if(newUser.password !== newUser.passwordConfirm) {
-        handleError('password and confirm need to be the same')
+        errors.handleError('password and confirm need to be the same')
         return
       }
       const response = await axios.post('/api/users', newUser);
       Users.value.push(response.data);
       return newUser
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
@@ -62,14 +61,14 @@ export const useUserStore = defineStore('Users', () => {
       await axios.delete(`/api/users/${user.id}`);
       Users.value = Users.value.filter(u => u.id !== user.id);
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
   async function updateUser(user) {
     try {
       if(user.password !== user.passwordConfirm) {
-        return  handleError('password and confirm need to be the same')
+        return  errors.handleError('password and confirm need to be the same')
       }
       const response = await axios.put(`api/users/${user.id}`, user);
       const updatedUser = response.data;
@@ -78,16 +77,10 @@ export const useUserStore = defineStore('Users', () => {
         return user;
       });
     } catch (error) {
-      handleError(error);
+      errors.handleError(error);
     }
   }
 
-  function handleError(error) {
-    console.error('Request failed:', error);
-    errors.add({
-      text:error?.response?.data?.message || error?.message || error
-    })
-  }
 
   return {
     Users,
