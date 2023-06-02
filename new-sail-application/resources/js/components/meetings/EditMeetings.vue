@@ -67,7 +67,7 @@
         class="form-control"
       />
     </div>
-    <button type="submit" class="btn btn-primary">{{ id ? "Update" : "Create" }}</button>
+    <button type="submit" class="btn btn-primary" @click.prevent="save()">{{ id ? "Update" : "Create" }}</button>
   </form>
 </template>
 

@@ -92,10 +92,11 @@ class MeetingController extends Controller
         }
 
         if ($jwt->admin === 1) {
-            $organization = $request->organization ? $request->organization : $jwt->organization_id;
+            $organization = $request->organization ? $request->organization['id'] : $jwt->organization_id;
         } else {
             $organization = $jwt->organization_id;
         }
+        
         $meeting->update([
             'date' => $request->date,
             'start_time' => $request->start_time,
@@ -114,13 +115,13 @@ class MeetingController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Meeting  $meeting
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Meeting $meeting)
     {
         $jwt = JWTAuth::parseToken()->authenticate();
-        if ($jwt->admin !== 1 && $jwt->organization_id === $meeting->$jwt->organization_id) {
-            return response()->JsonResponse(['error' => 'Unauthorized'], 401);
+
+        if ($jwt->admin !== 1 && $jwt->organization_id !== $meeting->organization_id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         $meeting->delete();

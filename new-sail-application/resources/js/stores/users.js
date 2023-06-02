@@ -43,6 +43,7 @@ export const useUserStore = defineStore('Users', () => {
   }
 
   async function createUser(newUser) {
+    newUser.admin = false
     try {
       if(newUser.password !== newUser.passwordConfirm) {
         errors.handleError('password and confirm need to be the same')
@@ -66,6 +67,7 @@ export const useUserStore = defineStore('Users', () => {
   }
 
   async function updateUser(user) {
+    user.admin = false
     try {
       if(user.password !== user.passwordConfirm) {
         return  errors.handleError('password and confirm need to be the same')

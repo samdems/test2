@@ -55,7 +55,7 @@
         class="form-control"
       />
     </div>
-    <button type="submit" class="btn btn-primary">{{ id ? "Update" : "Create" }}</button>
+    <button type="submit" class="btn btn-primary" @click.prevent="save()">{{ id ? "Update" : "Create" }}</button>
   </form>
 </template>
 
@@ -76,7 +76,8 @@ const user = ref({
     email:'',
     password:'',
     passwordConfirm:'',
-    organization:null
+    organization:null,
+    admin:false
 })
 async function fetchData() {
     organizations.fetchOrganizations()

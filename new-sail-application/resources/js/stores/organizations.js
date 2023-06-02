@@ -58,6 +58,7 @@ export const useOrganizationStore = defineStore('Organizations', () => {
         if (org.id === updatedOrganization.id) return updatedOrganization;
         return org;
       });
+      return updatedOrganization;
     } catch (error) {
       errors.handleError(error);
     }
