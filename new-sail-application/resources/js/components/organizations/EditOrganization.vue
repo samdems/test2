@@ -1,12 +1,14 @@
 <template>
   <form>
     <div class="input-group mb-3">
+      <label class="input-group-text" for="name">Name:</label>
       <input
         v-model="organization.name"
         type="text"
+        id="name"
         class="form-control"
-        placeholder="name"
-        aria-label="name"
+        placeholder="Name"
+        aria-label="Name"
       />
     </div>
     <button type="submit" class="btn btn-primary" @click.prevent="save()">
@@ -14,6 +16,8 @@
     </button>
   </form>
 </template>
+
+
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";

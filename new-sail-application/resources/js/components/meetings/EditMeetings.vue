@@ -1,72 +1,78 @@
 <template>
-    <form>
-      <div class="input-group mb-3">
-        <input
-          v-model="meeting.title"
-          type="text"
-          class="form-control"
-          placeholder="title"
-          aria-label="title"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <input
-          v-model="meeting.date"
-          type="date"
-          class="form-control"
-          placeholder="date"
-          aria-label="date"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <input
-          v-model="meeting.start_time"
-          type="time"
-          class="form-control"
-          placeholder="start time"
-          aria-label="start time"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <input
-          v-model="meeting.end_time"
-          type="time"
-          class="form-control"
-          placeholder="end time"
-          aria-label="end time"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <input
-          v-model="meeting.agenda"
-          type="text"
-          class="form-control"
-          placeholder="agenda"
-          aria-label="agenda"
-        />
-      </div>
-      <div class="input-group mb-3">
-           <Multiselect
-                v-model="meeting.attendees"
-                mode="multiple"
-                :options="users.Users"
-                label="name"
-                valueProp="id"
-            />
-      </div>
-      <div class="input-group mb-3">
-           <Multiselect
-                v-model="meeting.organization"
-                :options="organizations.Organizations"
-                label="name"
-                valueProp="id"
-            />
-      </div>
-      <button type="submit" class="btn btn-primary" @click.prevent="save()">
-        {{ id ? "Update" : "Create" }}
-      </button>
-    </form>
-  </template>
+  <form class="container">
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="title">Title:</label>
+      <input
+        v-model="meeting.title"
+        type="text"
+        id="title"
+        class="form-control"
+        placeholder="Title"
+        aria-label="Title"
+      />
+    </div>
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="date">Date:</label>
+      <input
+        v-model="meeting.date"
+        type="date"
+        id="date"
+        class="form-control"
+        placeholder="Date"
+        aria-label="Date"
+      />
+    </div>
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="start-time">Start Time:</label>
+      <input
+        v-model="meeting.start_time"
+        type="time"
+        id="start-time"
+        class="form-control"
+        placeholder="Start Time"
+        aria-label="Start Time"
+      />
+    </div>
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="end-time">End Time:</label>
+      <input
+        v-model="meeting.end_time"
+        type="time"
+        id="end-time"
+        class="form-control"
+        placeholder="End Time"
+        aria-label="End Time"
+      />
+    </div>
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="agenda">Agenda:</label>
+      <input
+        v-model="meeting.agenda"
+        type="text"
+        id="agenda"
+        class="form-control"
+        placeholder="Agenda"
+        aria-label="Agenda"
+      />
+    </div>
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="attendees">Attendees:</label>
+      <Multiselect
+        v-model="meeting.attendees"
+        mode="multiple"
+        :options="users.Users"
+        label="name"
+        valueProp="id"
+        id="attendees"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">{{ id ? "Update" : "Create" }}</button>
+  </form>
+</template>
+
+
+
   
   <script setup>
   import { useRoute, useRouter } from "vue-router";
@@ -92,11 +98,10 @@
     end_time: '',
     agenda: '',
     attendees: [],
-    organization:null
+    organization: users.ActiveUser.organization_id
   });
   
   async function fetchData() {
-    organizations.fetchOrganizations()
     users.fetchUsers();
     if (!id.value) return;
     meeting.value = await meetings.fetchMeeting(id.value);
@@ -109,9 +114,9 @@
     } else {
       meetingUpdated = await create();
     }
-  
+  debugger
     if (meetingUpdated) {
-      router.push('/meetings');
+      router.push('/mymeetings');
     }
   }
   

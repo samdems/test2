@@ -16,7 +16,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <span v-for="(route, index) in routes" :key="index">
-            <li v-if="route.nav" class="nav-item" :class="{ active: isActiveRoute(route.path) }">
+            <li v-if="route.nav && isAdmin(route)" class="nav-item" :class="{ active: isActiveRoute(route.path) }">
               <router-link :to="route.path" class="nav-link">
                 {{route.name}}
               </router-link>
@@ -40,4 +40,8 @@ const users = useUserStore()
 const route = useRoute();
 
 const isActiveRoute = (path) => route.path === path;
+function isAdmin(route){
+  if(users.ActiveUser?.admin) return true
+  return !route.admin
+}
 </script>

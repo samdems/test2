@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -90,7 +91,8 @@ class UserController extends Controller
         if (!$token = Auth::attempt($credentials)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
-
-        return response()->json(['token' => $token]);
+        $user = User::where('email',$credentials['email'])->first();
+        $user->load(['organization']);
+        return response()->json(['token' => $token,'user'=>$user]);
     }
 }

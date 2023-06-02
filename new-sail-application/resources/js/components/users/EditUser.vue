@@ -1,52 +1,61 @@
 <template>
-  <form>
-    <div class="input-group mb-3">
+  <form class="container">
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="name">Name:</label>
       <input
         v-model="user.name"
         type="text"
+        id="name"
         class="form-control"
-        placeholder="name"
-        aria-label="name"
+        placeholder="Name"
+        aria-label="Name"
       />
     </div>
-    <div class="input-group mb-3">
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="email">Email:</label>
       <input
         v-model="user.email"
         type="email"
+        id="email"
         class="form-control"
-        placeholder="email"
-        aria-label="email"
+        placeholder="Email"
+        aria-label="Email"
       />
     </div>
-    <div class="input-group mb-3">
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="password">Password:</label>
       <input
         v-model="user.password"
         type="password"
+        id="password"
         class="form-control"
-        placeholder="password"
-        aria-label="password"
+        placeholder="Password"
+        aria-label="Password"
       />
     </div>
-    <div class="input-group mb-3">
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="password-confirm">Confirm Password:</label>
       <input
         v-model="user.passwordConfirm"
         type="password"
+        id="password-confirm"
         class="form-control"
-        placeholder="password confirm"
-        aria-label="password confirm"
+        placeholder="Confirm Password"
+        aria-label="Confirm Password"
       />
     </div>
-    <div class="input-group mb-3">
-           <Multiselect
-                v-model="user.organization"
-                :options="organizations.Organizations"
-                label="name"
-                valueProp="id"
-            />
+    <div class="mb-3 input-group">
+      <label class="input-group-text" for="organization">Organization:</label>
+      <Multiselect
+        v-model="user.organization"
+        :options="organizations.Organizations"
+        label="name"
+        valueProp="id"
+        id="organization"
+        class="form-control"
+      />
     </div>
-    <button type="submit" class="btn btn-primary" @click.prevent="save()">
-      {{ id ? "update" : "make" }}
-    </button>
+    <button type="submit" class="btn btn-primary">{{ id ? "Update" : "Create" }}</button>
   </form>
 </template>
 

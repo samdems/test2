@@ -1,14 +1,54 @@
+## Requirements
 
-## ToDo
+Before running the project, make sure you have the following dependencies installed:
 
-1. [] Interface to select a user from prepopulated data - an authentication layer isnt required but feel free to add it.
+- Docker
+- Docker Compose
 
-2. [] Interface to display a list of meetings.
+## Getting Started
 
-3. [] Meeting data consists of a date, start and end time, title, agenda, and the number of attendees.
+To start the project, follow these steps:
 
-4. [] Interface to perform CRUD operations on the meeting data.
+1. Run the following command in the project directory:
+   ```
+   ./vendor/bin/sail up
+   ```
 
-5. [] The interface should indicate meetings that have passed.
+2. After the Docker containers are up and running, the project will be accessible on port 80 of your local machine. Open a web browser and navigate to `http://localhost` to access the application.
 
-6. [] The system should reject invalid requests with an appropriate error code and message.
+3. Execute the following command to compile the assets:
+   ```
+   ./vendor/bin/sail npm run dev
+   ```
+
+## Stopping the Project
+
+To stop the project, run the following command:
+```
+./vendor/bin/sail down
+```
+
+## Seeding the Database
+
+If you need to seed the database with sample data, use the following command:
+```
+./vendor/bin/sail artisan migrate:refresh --seed
+```
+
+## Helpful Users
+
+The following users have been created to assist with testing the application:
+
+- **Test admin**
+  - Name: Test admin
+  - Email: admin@localhost
+  - Password: password
+  - Role: Administrator
+  - Organization ID: 1
+
+- **Test user**
+  - Name: Test User
+  - Email: user@localhost
+  - Password: password
+  - Role: Regular User
+  - Organization ID: 1
